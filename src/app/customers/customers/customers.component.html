@@ -1,0 +1,198 @@
+<div class="h-screen overflow-hidden bg-[#F4F6FA] dark:bg-[#0B1220] text-slate-800 dark:text-slate-100">
+	<div class="h-full p-6">
+		<div class="mx-auto max-w-6xl h-full flex flex-col">
+			<div class="flex items-end justify-between gap-4 shrink-0">
+				<div>
+					<h1 class="text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+						{{ 'CUSTOMERS.TITLE' | translate }}
+					</h1>
+					<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+						{{ 'CUSTOMERS.SUBTITLE' | translate }}
+					</p>
+				</div>
+				<button type="button" (click)="openCreateCustomerDialog()" class="inline-flex h-10 w-10 items-center justify-center rounded-xl
+                 border border-slate-200 bg-white text-slate-900
+                 hover:bg-slate-50 active:scale-95 transition
+                 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+					[attr.aria-label]="'CUSTOMERS.ADD.BUTTON' | translate" [title]="'CUSTOMERS.ADD.BUTTON' | translate">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+						stroke-width="2">
+						<path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14M5 12h14" />
+					</svg>
+				</button>
+			</div>
+			<div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-4 shrink-0">
+				<input class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+                 text-slate-800 placeholder:text-slate-400
+                 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+                 dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:placeholder:text-slate-500"
+					[placeholder]="'CUSTOMERS.FILTER.SEARCH_PLACEHOLDER' | translate" [(ngModel)]="search"
+					(ngModelChange)="onSearchChange($event)" />
+
+				<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+                 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+                 dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="kycStatus"
+					(ngModelChange)="onKycChange($event)">
+					<option value="">{{ 'CUSTOMERS.FILTER.KYC_ALL' | translate }}</option>
+					<option value="UNKNOWN">UNKNOWN</option>
+					<option value="PENDING">PENDING</option>
+					<option value="APPROVED">APPROVED</option>
+					<option value="REJECTED">REJECTED</option>
+				</select>
+
+				<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+                 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+                 dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="isActive"
+					(ngModelChange)="onActiveChange($event)">
+					<option value="">{{ 'CUSTOMERS.FILTER.STATUS_ALL' | translate }}</option>
+					<option value="true">{{ 'CUSTOMERS.FILTER.STATUS_ACTIVE' | translate }}</option>
+					<option value="false">{{ 'CUSTOMERS.FILTER.STATUS_INACTIVE' | translate }}</option>
+				</select>
+
+				<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+                 text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+                 dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="pageSize"
+					(ngModelChange)="onPageSizeChange($event)">
+					<option [ngValue]="10">{{ 'CUSTOMERS.FILTER.PAGE_SIZE_10' | translate }}</option>
+					<option [ngValue]="20">{{ 'CUSTOMERS.FILTER.PAGE_SIZE_20' | translate }}</option>
+					<option [ngValue]="50">{{ 'CUSTOMERS.FILTER.PAGE_SIZE_50' | translate }}</option>
+				</select>
+			</div>
+
+			<div *ngIf="(error$ | async) as err" class="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700
+               dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200 shrink-0">
+				{{ err.message }}
+			</div>
+
+			<div class="mt-4 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur p-2 shadow-sm
+               dark:border-white/10 dark:bg-white/5
+               flex-1 min-h-0 overflow-auto">
+				<ng-container *ngIf="(customers$ | async) as res">
+					<div *ngIf="(loading$ | async); else tableTpl" class="p-4 space-y-3">
+						<div class="h-6 w-1/3 rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+						<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+						<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+						<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+					</div>
+
+					<ng-template #tableTpl>
+						<div class="overflow-x-auto">
+							<table class="min-w-full text-sm">
+								<thead class="text-slate-500 dark:text-slate-400">
+									<tr>
+										<th class="px-4 py-3 font-medium text-left">{{ 'CUSTOMERS.TABLE.NAME' | translate }}</th>
+										<th class="px-4 py-3 font-medium text-left">{{ 'CUSTOMERS.TABLE.EMAIL' | translate }}</th>
+										<th class="px-4 py-3 font-medium text-left">{{ 'CUSTOMERS.TABLE.WALLET' | translate }}</th>
+										<th class="px-4 py-3 font-medium text-left">{{ 'CUSTOMERS.TABLE.KYC' | translate }}</th>
+										<th class="px-4 py-3 font-medium text-left">{{ 'CUSTOMERS.TABLE.ACTIVE' | translate }}</th>
+										<th class="px-4 py-3 font-medium text-left actions">{{ 'CUSTOMERS.TABLE.ACTIONS' | translate }}</th>
+									</tr>
+								</thead>
+
+								<tbody class="divide-y divide-slate-200 dark:divide-white/10">
+									<tr *ngFor="let customer of res.data" (click)="openCustomerDetails(customer.id)"
+										class="cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5">
+										<td class="px-4 py-3 font-medium text-slate-800 dark:text-slate-100">{{ customer.name }}</td>
+										<td class="px-4 py-3 text-slate-600 dark:text-slate-300">{{ customer.email }}</td>
+										<td class="px-4 py-3 text-slate-600 dark:text-slate-300">{{ customer.walletNumber }}</td>
+
+										<td class="px-4 py-3">
+											<span class="rounded-full border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700
+                                   dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+												{{ customer.kycStatus }}
+											</span>
+										</td>
+
+										<td class="px-4 py-3">
+											<span class="rounded-full px-2 py-1 text-xs" [class.bg-emerald-50]="customer.isActive"
+												[class.text-emerald-700]="customer.isActive" [class.bg-slate-100]="!customer.isActive"
+												[class.text-slate-600]="!customer.isActive" [class.dark:bg-emerald-500/10]="customer.isActive"
+												[class.dark:text-emerald-300]="customer.isActive" [class.dark:bg-white/10]="!customer.isActive"
+												[class.dark:text-slate-300]="!customer.isActive">
+												{{
+												customer.isActive
+												? ('COMMON.ACTIVE' | translate)
+												: ('COMMON.INACTIVE' | translate)
+												}}
+											</span>
+										</td>
+
+										<td class="text-center">
+											<button type="button" (click)="$event.stopPropagation()" class="inline-flex h-9 w-9 items-center justify-center rounded-xl
+                               border border-black/10 bg-white hover:bg-black/[0.03]
+                               active:scale-95 transition dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
+												[cdkMenuTriggerFor]="customerActionsMenu" [cdkMenuTriggerData]="{ customer: customer }"
+												[attr.aria-label]="'CUSTOMERS.ACTIONS.TITLE' | translate"
+												[title]="'CUSTOMERS.ACTIONS.TITLE' | translate">
+												<span class="text-xl leading-none dark:text-slate-100">⋯</span>
+											</button>
+										</td>
+
+										<ng-template #customerActionsMenu let-id="id">
+											<div cdkMenu class="min-w-[180px] overflow-hidden rounded-2xl border border-black/10 bg-white
+                                          shadow-[0_12px_30px_rgba(0,0,0,0.12)] p-1">
+												<button cdkMenuItem type="button" class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold
+                                 text-rose-600 hover:bg-rose-500/10 transition"
+													(cdkMenuItemTriggered)="deleteCustomer(customer.id)">
+													{{ 'CUSTOMERS.ACTIONS.REMOVE' | translate }}
+												</button>
+
+												<button cdkMenuItem type="button" class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold
+                                 text-rose-600 hover:bg-rose-500/10 transition"
+													(cdkMenuItemTriggered)="openEditCustomerDialog(customer)">
+													{{ 'CUSTOMERS.ACTIONS.UPDATE' | translate }}
+												</button>
+
+												<button cdkMenuItem type="button" class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold
+                                 hover:bg-black/[0.04] transition" (cdkMenuItemTriggered)="goToWallets(customer.id)">
+													{{ 'CUSTOMERS.ACTIONS.WALLET' | translate }}
+												</button>
+
+												<button cdkMenuItem type="button" class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold
+                                 hover:bg-black/[0.04] transition"
+													(cdkMenuItemTriggered)="goToTransactions(customer.id)">
+													{{ 'CUSTOMERS.ACTIONS.TRANSACTIONS' | translate }}
+												</button>
+											</div>
+										</ng-template>
+									</tr>
+
+									<tr *ngIf="res.data.length === 0">
+										<td colspan="6" class="px-4 py-10 text-center text-slate-500 dark:text-slate-400">
+											{{ 'CUSTOMERS.EMPTY' | translate }}
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="flex items-center justify-between px-3 py-3">
+							<div class="text-xs text-slate-500 dark:text-slate-400">
+								{{ 'COMMON.PAGE' | translate }}
+								<span class="font-medium text-slate-700 dark:text-slate-200">{{ res.page + 1 }}</span>
+								• {{ 'COMMON.TOTAL' | translate }}
+								<span class="font-medium text-slate-700 dark:text-slate-200">{{ res.total }}</span>
+							</div>
+
+							<div class="flex gap-2">
+								<button class="rounded-xl px-3 py-1.5 border border-slate-200 dark:border-white/10
+                         bg-white/80 dark:bg-white/5 text-slate-700 dark:text-slate-100
+                         hover:bg-white dark:hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+									(click)="prevPage(res)" [disabled]="res.page === 0">
+									{{ 'COMMON.PREV' | translate }}
+								</button>
+
+								<button class="rounded-xl px-3 py-1.5 border border-slate-200 dark:border-white/10
+                         bg-white/80 dark:bg-white/5 text-slate-700 dark:text-slate-100
+                         hover:bg-white dark:hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
+									(click)="nextPage(res)" [disabled]="(res.page + 1) * res.pageSize >= res.total">
+									{{ 'COMMON.NEXT' | translate }}
+								</button>
+							</div>
+						</div>
+					</ng-template>
+				</ng-container>
+			</div>
+		</div>
+	</div>
+</div>

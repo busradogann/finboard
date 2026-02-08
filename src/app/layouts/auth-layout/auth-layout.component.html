@@ -1,0 +1,75 @@
+<div class="min-h-screen relative overflow-hidden
+            bg-[#F4F6FA] text-slate-800
+            dark:bg-slate-950 dark:text-slate-100">
+	<div class="absolute inset-0 pointer-events-none">
+		<div class="absolute -top-40 -left-40 h-[520px] w-[520px] rounded-full blur-3xl opacity-40
+             bg-gradient-to-br from-slate-200 via-white to-cyan-200">
+		</div>
+		<div
+			class="absolute -bottom-48 -right-48 h-[620px] w-[620px] rounded-full blur-3xl opacity-30 bg-gradient-to-br from-indigo-200 via-slate-200 to-white">
+		</div>
+		<div class="absolute inset-0 opacity-[0.15]" style="background-image: radial-gradient(circle at 1px 1px, rgb(203 213 225) 1px, transparent 0);
+   background-size: 28px 28px;">
+		</div>
+	</div>
+	<div class="relative px-4 sm:px-6 lg:px-10 py-10">
+		<div class="mx-auto max-w-6xl">
+			<div class="relative grid min-h-[calc(100vh-5rem)] gap-6 pt-16
+               rounded-3xl  border border-slate-200/60
+            bg-white/60
+            dark:border-slate-700/60
+            dark:bg-slate-500/50
+            backdrop-blur-xl
+               p-4 sm:p-6 lg:p-8 shadow-xl">
+				<div class="absolute right-5 top-5">
+					<div class="inline-flex items-center gap-3 rounded-xl
+            border border-slate-200/70 bg-white/80
+            dark:border-slate-700/70 dark:bg-slate-900/70
+            px-3 py-2 shadow-sm backdrop-blur">
+						<span class="inline-flex h-4 w-4 text-slate-500">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="M2 12h20"></path>
+								<path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"></path>
+							</svg>
+						</span>
+						<select class="rounded-lg border border-slate-200 bg-white text-slate-700
+               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200
+               px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-cyan-300/40" [value]="lang.current"
+							(change)="onLangChange($event)">
+							<option value="tr">TR</option>
+							<option value="en">EN</option>
+						</select>
+						<div class="h-5 w-px bg-slate-200 dark:bg-slate-700"></div>
+						<button type="button" (click)="toggleTheme()" class="relative inline-flex h-6 w-11 items-center rounded-full
+             bg-slate-200 transition
+             dark:bg-slate-600 focus:outline-none">
+							<span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition
+               translate-x-1
+               dark:translate-x-6">
+							</span>
+						</button>
+					</div>
+				</div>
+				<section class="flex items-center justify-center">
+					<div class="w-full max-w-md">
+						<div class="mb-6 text-center">
+							<p class="text-2xl font-semibold tracking-tight text-slate-800 dark:text-slate-100">
+								Finboard
+							</p>
+							<p class="text-sm text-slate-500 dark:text-slate-400">
+								{{ 'COMMON.FINTECH_CLIENT_DASHBOARD' | translate }}
+							</p>
+						</div>
+						<div class="rounded-2xl border border-slate-200/70
+                     bg-white/80 backdrop-blur
+                     p-6 sm:p-7
+                     shadow-[0_30px_80px_-50px_rgba(15,23,42,0.25)]">
+							<router-outlet></router-outlet>
+						</div>
+					</div>
+				</section>
+			</div>
+		</div>
+	</div>
+</div>

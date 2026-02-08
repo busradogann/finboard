@@ -1,0 +1,35 @@
+<div class="mb-6 text-center">
+	<p class="mt-1 text-sm text-slate-400">
+		{{ 'AUTH.LOGIN.SUBTITLE' | translate }}
+	</p>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="submit()" class="space-y-5">
+	<formly-form [form]="form" [model]="model" [fields]="fields" [options]="options"></formly-form>
+
+	@if (error) {
+	<div class="rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-2.5 text-sm text-rose-300">
+		{{ error }}
+	</div>
+	}
+
+	<button type="submit" [disabled]="loading" class="group relative flex w-full items-center justify-center gap-2
+           rounded-xl bg-gradient-to-br from-slate-800 to-slate-900
+           px-4 py-2.5 font-medium text-white
+           transition hover:from-slate-700 hover:to-slate-800
+           focus:outline-none focus:ring-2 focus:ring-cyan-400/40
+           disabled:opacity-60 disabled:cursor-not-allowed
+           dark:from-slate-700 dark:to-slate-900
+           dark:hover:from-slate-600 dark:to-slate-800">
+		@if (!loading) {
+		<span>{{ 'AUTH.LOGIN.SIGN_IN' | translate }}</span>
+		} @else {
+		<span class="flex items-center gap-2">
+			<span class="h-4 w-4 animate-spin rounded-full border-2 border-white/70 border-t-transparent"></span>
+			{{ 'AUTH.LOGIN.SIGNING_IN' | translate }}
+		</span>
+		}
+	</button>
+</form>
+
+<div class="mt-6 text-center text-sm text-slate-400"></div>

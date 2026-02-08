@@ -1,0 +1,123 @@
+<section class="p-4" *ngIf="vm$ | async as vm">
+	<header class="flex items-start justify-between gap-3 mb-4">
+		<a routerLink="/customers" class="text-sm font-semibold text-black/70 hover:text-black transition">
+			← {{ 'CUSTOMERS.TITLE' | translate }}
+		</a>
+
+		<button type="button" (click)="refresh()" [title]="'COMMON.REFRESH' | translate" class="group shrink-0 inline-flex items-center justify-center
+             h-10 w-10 rounded-xl
+             bg-black text-white
+             border border-black/10
+             hover:bg-black/90
+             active:scale-95
+             transition disabled:opacity-40 disabled:cursor-not-allowed" [disabled]="vm.state === 'loading'"
+			[attr.aria-label]="'COMMON.REFRESH' | translate">
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition-transform duration-300 group-hover:rotate-180"
+				fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<path stroke-linecap="round" stroke-linejoin="round"
+					d="M4 4v6h6M20 20v-6h-6M5 13a7 7 0 0112-4M19 11a7 7 0 01-12 4" />
+			</svg>
+		</button>
+	</header>
+
+	<div class="flex-1 min-w-0 mb-4">
+		<h2 class="m-0 text-xl font-extrabold tracking-tight">
+			{{ 'WALLET.TITLE' | translate }}
+		</h2>
+		<div class="mt-1 text-xs text-black/55">
+			{{ 'WALLET.CUSTOMER' | translate }}:
+			<span class="font-mono font-semibold text-black/70">
+				{{ vm.customerId || '-' }}
+			</span>
+		</div>
+	</div>
+
+	<div *ngIf="vm.state === 'loading'" class="rounded-2xl border border-black/10 bg-black/[0.02] p-4">
+		<div class="text-sm font-semibold text-black/70">
+			{{ 'COMMON.LOADING' | translate }}
+		</div>
+
+		<div class="mt-3 space-y-2">
+			<div class="h-3 w-2/3 rounded-full bg-black/10 animate-pulse"></div>
+			<div class="h-3 w-1/2 rounded-full bg-black/10 animate-pulse"></div>
+			<div class="h-3 w-3/4 rounded-full bg-black/10 animate-pulse"></div>
+		</div>
+	</div>
+
+	<div *ngIf="vm.state === 'error'" class="rounded-2xl border border-red-500/20 bg-red-500/[0.04] p-4">
+		<div class="font-extrabold text-black">
+			{{ 'COMMON.SOMETHING_WENT_WRONG' | translate }}
+		</div>
+
+		<div class="mt-1 text-sm text-black/70 break-words">
+			{{ vm.message }}
+		</div>
+
+		<button type="button" (click)="refresh()" class="mt-3 rounded-xl bg-white text-black px-3 py-2 text-sm font-bold
+             border border-black/15 hover:bg-black/5 transition">
+			{{ 'COMMON.TRY_AGAIN' | translate }}
+		</button>
+	</div>
+
+	<div *ngIf="vm.state === 'ready'"
+		class="rounded-2xl border border-black/10 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.04)] overflow-hidden">
+		<div class="overflow-x-auto">
+			<table class="w-full border-collapse">
+				<thead>
+					<tr class="bg-black/[0.02]">
+						<th class="text-left px-4 py-3 text-xs font-bold tracking-wide text-black/55">
+							{{ 'WALLET.TABLE.CURRENCY' | translate }}
+						</th>
+						<th class="text-right px-4 py-3 text-xs font-bold tracking-wide text-black/55">
+							{{ 'WALLET.TABLE.BALANCE' | translate }}
+						</th>
+						<th class="text-right px-4 py-3 text-xs font-bold tracking-wide text-black/55">
+							{{ 'WALLET.TABLE.DAILY_LIMIT' | translate }}
+						</th>
+						<th class="text-right px-4 py-3 text-xs font-bold tracking-wide text-black/55">
+							{{ 'WALLET.TABLE.MONTHLY_LIMIT' | translate }}
+						</th>
+						<th class="text-right px-4 py-3 text-xs font-bold tracking-wide text-black/55">
+							{{ 'COMMON.ACTIONS' | translate }}
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr class="border-t border-black/10 hover:bg-black/[0.02] transition">
+						<td class="px-4 py-4 align-middle">
+							<span class="inline-flex items-center h-6 px-3 rounded-full text-xs font-extrabold
+                       border border-black/15 bg-black/[0.03] mr-2">
+								{{ vm.wallet.currency }}
+							</span>
+
+							<span class="text-sm font-semibold text-black/55">
+								({{ vm.currencySymbol }})
+							</span>
+						</td>
+
+						<td class="px-4 py-4 text-right align-middle font-semibold text-black tabular-nums">
+							{{ formatMoney(vm.wallet.balance, vm.wallet.currency) }}
+						</td>
+
+						<td class="px-4 py-4 text-right align-middle font-semibold text-black tabular-nums">
+							{{ formatMoney(vm.wallet.dailyLimit, vm.wallet.currency) }}
+						</td>
+
+						<td class="px-4 py-4 text-right align-middle font-semibold text-black tabular-nums">
+							{{ formatMoney(vm.wallet.monthlyLimit, vm.wallet.currency) }}
+						</td>
+
+						<td class="px-4 py-4 text-right align-middle">
+							<button type="button" (click)="openUpdateWalletModal(vm.wallet)" class="inline-flex items-center justify-center h-9 px-3 rounded-xl
+								               bg-black text-white text-xs font-extrabold
+								               hover:bg-black/90 active:scale-95 transition">
+								{{ 'WALLET.UPDATE' | translate }}
+							</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>

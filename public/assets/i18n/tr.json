@@ -1,0 +1,143 @@
+{
+  "COMMON": {
+    "BACKDROP_CLOSE": "Pencereyi kapat",
+    "CLOSE": "Kapat",
+    "CLOSE_ICON": "✕",
+    "CANCEL": "İptal",
+    "SAVE": "Kaydet",
+    "SAVING": "Kaydediliyor…",
+    "ERROR_GENERIC": "Bir hata oluştu.",
+    "BACK": "Geri",
+    "REFRESH": "Yenile",
+    "PAGE": "Sayfa",
+    "TOTAL": "Toplam",
+    "PREV": "Önceki",
+    "NEXT": "Sonraki",
+    "ACTIVE": "Aktif",
+    "INACTIVE": "Pasif",
+    "LOADING": "Yükleniyor…",
+    "SOMETHING_WENT_WRONG": "Bir şey ters gitti",
+    "TRY_AGAIN": "Tekrar dene",
+    "UPDATE": "Güncelle",
+    "UPDATING": "Güncelleniyor…",
+    "FINTECH_CLIENT_DASHBOARD": "Fintech Müşteri Paneli",
+    "ACTIONS": "İşlemler",
+    "REQUIRED": "Zorunlu"
+  },
+  "CUSTOMERS": {
+    "ADD": {
+      "TITLE": "Müşteri ekle",
+      "SUBTITLE": "Yeni bir müşteri kaydı oluşturun.",
+      "FORM": {
+        "NAME": "Ad Soyad",
+        "NAME_PH": "Ad Soyad",
+        "EMAIL": "E-posta",
+        "EMAIL_PH": "kullanici@sirket.com",
+        "PHONE": "Telefon",
+        "PHONE_PH": "+90 5xx xxx xx xx",
+        "DOB": "Doğum tarihi",
+        "NATIONAL_ID": "TC Kimlik No",
+        "NATIONAL_ID_PH": "12345678901",
+        "ADDRESS_TITLE": "Adres",
+        "COUNTRY": "Ülke",
+        "CITY": "Şehir",
+        "POSTAL_CODE": "Posta kodu",
+        "LINE1": "Adres satırı"
+      },
+      "BUTTON": "Müşteri ekle"
+    },
+    "EDIT": {
+      "TITLE": "Müşteriyi düzenle",
+      "SUBTITLE": "Müşteri bilgilerini güncelleyin.",
+      "FORM": {
+        "KYC_STATUS": "KYC Durumu",
+        "IS_ACTIVE": "Aktif"
+      }
+    },
+    "TITLE": "Müşteriler",
+    "SUBTITLE": "Cüzdan müşterilerini arayın, filtreleyin ve takip edin.",
+    "FILTER": {
+      "SEARCH_PLACEHOLDER": "Ad / e-posta / cüzdan ara",
+      "KYC_ALL": "KYC: Tümü",
+      "STATUS_ALL": "Durum: Tümü",
+      "STATUS_ACTIVE": "Aktif",
+      "STATUS_INACTIVE": "Pasif",
+      "PAGE_SIZE_10": "10 / sayfa",
+      "PAGE_SIZE_20": "20 / sayfa",
+      "PAGE_SIZE_50": "50 / sayfa"
+    },
+    "TABLE": {
+      "NAME": "Ad Soyad",
+      "EMAIL": "E-posta",
+      "WALLET": "Cüzdan",
+      "KYC": "KYC",
+      "ACTIVE": "Aktif",
+      "ACTIONS": "İşlemler"
+    },
+    "ACTIONS": {
+      "TITLE": "İşlemler",
+      "REMOVE": "Sil",
+      "UPDATE": "Güncelle",
+      "WALLET": "Cüzdan",
+      "TRANSACTIONS": "İşlemler"
+    },
+    "EMPTY": "Müşteri bulunamadı.",
+    "DETAIL": {
+      "ERROR_MESSAGE": "Müşteri detayı alınamadı. Tekrar deneyin."
+    }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "SUBTITLE": "Devam etmek için giriş yapın",
+      "EMAIL_LABEL": "E-posta",
+      "EMAIL_PLACEHOLDER": "E-posta adresinizi girin",
+      "EMAIL_ERROR": "Geçerli bir e-posta adresi giriniz",
+      "PASSWORD_LABEL": "Şifre",
+      "PASSWORD_PLACEHOLDER": "Şifrenizi girin",
+      "PASSWORD_ERROR": "Şifre zorunludur",
+      "SIGN_IN": "Giriş yap",
+      "SIGNING_IN": "Giriş yapılıyor...",
+      "INVALID_CREDENTIALS": "E-posta veya şifre hatalı"
+    }
+  },
+  "TRANSACTIONS": {
+    "TITLE": "İşlemler",
+    "SUBTITLE": "Müşteriye ait işlemleri görüntüleyin ve filtreleyin",
+    "FILTER": {
+      "TYPE_ALL": "Tip: Tümü",
+      "DIRECTION_ALL": "Yön: Tümü",
+      "CURRENCY_ALL": "Para birimi: Tümü",
+      "FROM": "Başlangıç",
+      "TO": "Bitiş"
+    },
+    "TABLE": {
+      "DATE": "Tarih",
+      "TYPE": "Tip",
+      "DIRECTION": "Yön",
+      "DESCRIPTION": "Açıklama",
+      "AMOUNT": "Tutar",
+      "MERCHANT_RECEIVER": "İşyeri / Alıcı"
+    },
+    "TYPE": {
+      "DEBIT": "DEBIT",
+      "CREDIT": "CREDIT"
+    },
+    "DIRECTION": {
+      "INCOMING": "INCOMING",
+      "OUTGOING": "OUTGOING"
+    },
+    "EMPTY": "İşlem bulunamadı."
+  },
+  "WALLET": {
+    "TITLE": "Cüzdan",
+    "CUSTOMER": "Müşteri",
+    "UPDATE": "Cüzdanı güncelle",
+    "TABLE": {
+      "CURRENCY": "Para birimi",
+      "BALANCE": "Bakiye",
+      "DAILY_LIMIT": "Günlük limit",
+      "MONTHLY_LIMIT": "Aylık limit"
+    },
+    "WALLET_ERROR_MESSAGE": "Cüzdan bilgileri alınırken bir hata oluştu."
+  }
+}

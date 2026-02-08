@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Formly input base */
+.formly-input {
+  @apply w-full rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-900 placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-slate-900/20 focus:border-slate-900 transition;
+}
+
+/* Dark mode */
+.dark .formly-input {
+  @apply bg-slate-800 border-slate-600 text-slate-100 placeholder:text-slate-400 focus:ring-slate-100/20 focus:border-slate-100;
+}

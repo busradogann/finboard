@@ -1,0 +1,72 @@
+<div class="min-h-dvh bg-[#F4F6FA] dark:bg-[#0B1220] text-slate-800 dark:text-slate-100">
+	<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 h-dvh">
+		<div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 h-full py-8">
+			<aside class="min-h-0 h-full flex flex-col rounded-3xl border border-slate-200/70 dark:border-white/10
+                    bg-white/70 dark:bg-white/5 backdrop-blur p-4">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center gap-2">
+						<div
+							class="h-10 w-10 rounded-2xl bg-gradient-to-br from-slate-200 to-slate-400 dark:from-white/10 dark:to-white/20">
+							<img src="images/logo.jpg" alt="Finboard" class="h-full w-full object-cover rounded-2xl">
+						</div>
+						<div>
+							<p class="text-sm font-semibold tracking-tight">Finboard</p>
+							<p class="text-xs text-slate-500 dark:text-slate-400">Ops Dashboard</p>
+						</div>
+					</div>
+
+
+				</div>
+
+				<nav class="mt-6 space-y-2">
+					<a *ngFor="let item of nav" [routerLink]="item.to" routerLinkActive="bg-slate-900 text-white dark:bg-white/10"
+						[routerLinkActiveOptions]="{ exact: true }" class="flex items-center justify-between rounded-2xl px-3 py-2.5 text-sm
+         text-slate-700 dark:text-slate-200
+          dark:hover:bg-white/5">
+						<span class="font-medium">{{ item.label }}</span>
+					</a>
+				</nav>
+
+				<div class="mt-auto pt-6 flex items-center justify-between gap-2">
+					<div class="inline-flex items-center gap-2 rounded-xl border border-slate-200/70 bg-white/80 px-3 py-2 shadow-sm backdrop-blur
+                      dark:border-white/10 dark:bg-white/5">
+						<span class="inline-flex h-4 w-4 text-slate-500 dark:text-slate-300">
+							<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+								<circle cx="12" cy="12" r="10"></circle>
+								<path d="M2 12h20"></path>
+								<path d="M12 2a15 15 0 0 1 0 20a15 15 0 0 1 0-20z"></path>
+							</svg>
+						</span>
+
+						<select class="rounded-lg border border-slate-200 bg-white px-2 py-1 text-sm text-slate-700
+                     focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+                     dark:border-white/10 dark:bg-[#0B1220] dark:text-slate-100" [value]="lang.current"
+							(change)="onLangChange($event)">
+							<option value="tr">TR</option>
+							<option value="en">EN</option>
+						</select>
+
+						<div class="h-5 w-px bg-slate-200 dark:bg-white/10"></div>
+
+						<button type="button" (click)="toggleTheme()" class="relative inline-flex h-6 w-11 items-center rounded-full bg-slate-200 transition
+                     dark:bg-slate-600 focus:outline-none">
+							<span class="inline-block h-4 w-4 transform rounded-full bg-white shadow transition
+                       translate-x-1 dark:translate-x-6">
+							</span>
+						</button>
+					</div>
+
+					<button type="button" (click)="logout()" class="rounded-xl border border-slate-200/70 bg-white/80 px-3 py-2 text-sm text-slate-700 shadow-sm
+                   hover:bg-white dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+						Logout
+					</button>
+				</div>
+			</aside>
+
+			<main
+				class="min-h-0 rounded-3xl border border-slate-200/70 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur p-4 sm:p-6 overflow-auto">
+				<router-outlet></router-outlet>
+			</main>
+		</div>
+	</div>
+</div>

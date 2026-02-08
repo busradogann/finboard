@@ -1,0 +1,40 @@
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4" (click)="close()">
+  <div class="absolute inset-0 bg-black/40"></div>
+  <div class="relative w-full max-w-sm rounded-2xl bg-white border border-black/10 shadow-xl p-4"
+    (click)="$event.stopPropagation()">
+    <div class="flex items-start justify-between gap-3">
+      <div>
+        <div class="text-sm font-extrabold text-black">
+          {{ 'WALLET.UPDATE' | translate }}
+        </div>
+      </div>
+      <button type="button" class="h-9 w-9 rounded-xl border border-black/10 hover:bg-black/5 transition"
+        (click)="close()" aria-label="Close">
+        ✕
+      </button>
+    </div>
+
+    <form class="mt-4 space-y-3" [formGroup]="form" (ngSubmit)="submit()">
+      <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+
+      @if (apiError) {
+      <div class="rounded-xl border border-red-500/20 bg-red-500/[0.04] p-3 text-xs text-black/80">
+        {{ apiError }}
+      </div>
+      }
+
+      <div class="flex items-center justify-between gap-2 pt-2">
+        <button type="button" (click)="close()" class="h-10 px-3 rounded-xl border border-black/15 bg-white text-black text-xs font-extrabold
+                 hover:bg-black/5 transition">
+          {{ 'COMMON.CANCEL' | translate }}
+        </button>
+
+        <button type="submit" class="h-10 px-3 rounded-xl bg-black text-white text-xs font-extrabold
+                 hover:bg-black/90 active:scale-95 transition disabled:opacity-40 disabled:cursor-not-allowed"
+          [disabled]="form.invalid || submitting">
+          {{ submitting ? ('COMMON.SAVING' | translate) : ('COMMON.SAVE' | translate) }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

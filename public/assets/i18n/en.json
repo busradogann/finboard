@@ -1,0 +1,143 @@
+{
+  "COMMON": {
+    "BACKDROP_CLOSE": "Close dialog",
+    "CLOSE": "Close",
+    "CLOSE_ICON": "✕",
+    "CANCEL": "Cancel",
+    "SAVE": "Save",
+    "SAVING": "Saving…",
+    "ERROR_GENERIC": "Something went wrong.",
+    "BACK": "Back",
+    "REFRESH": "Refresh",
+    "PAGE": "Page",
+    "TOTAL": "Total",
+    "PREV": "Prev",
+    "NEXT": "Next",
+    "ACTIVE": "Active",
+    "INACTIVE": "Inactive",
+    "LOADING": "Loading…",
+    "SOMETHING_WENT_WRONG": "Something went wrong",
+    "TRY_AGAIN": "Try again",
+    "UPDATE": "Update",
+    "UPDATING": "Updating…",
+    "FINTECH_CLIENT_DASHBOARD": "Fintech Client Dashboard",
+    "ACTIONS": "Actions",
+    "REQUIRED": "Required"
+  },
+  "CUSTOMERS": {
+    "TITLE": "Customers",
+    "SUBTITLE": "Search, filter and monitor wallet customers.",
+    "FILTER": {
+      "SEARCH_PLACEHOLDER": "Search name / email / wallet",
+      "KYC_ALL": "KYC: All",
+      "STATUS_ALL": "Status: All",
+      "STATUS_ACTIVE": "Active",
+      "STATUS_INACTIVE": "Inactive",
+      "PAGE_SIZE_10": "10 / page",
+      "PAGE_SIZE_20": "20 / page",
+      "PAGE_SIZE_50": "50 / page"
+    },
+    "TABLE": {
+      "NAME": "Name",
+      "EMAIL": "Email",
+      "WALLET": "Wallet",
+      "KYC": "KYC",
+      "ACTIVE": "Active",
+      "ACTIONS": "Actions"
+    },
+    "ACTIONS": {
+      "TITLE": "Actions",
+      "REMOVE": "Remove",
+      "UPDATE": "Update",
+      "WALLET": "Wallet",
+      "TRANSACTIONS": "Transactions"
+    },
+    "EMPTY": "No customers found.",
+    "ADD": {
+      "TITLE": "Add customer",
+      "SUBTITLE": "Create a new customer record.",
+      "FORM": {
+        "NAME": "Name",
+        "NAME_PH": "Full name",
+        "EMAIL": "Email",
+        "EMAIL_PH": "user@company.com",
+        "PHONE": "Phone",
+        "PHONE_PH": "+90 5xx xxx xx xx",
+        "DOB": "Date of birth",
+        "NATIONAL_ID": "National ID",
+        "NATIONAL_ID_PH": "12345678901",
+        "ADDRESS_TITLE": "Address",
+        "COUNTRY": "Country",
+        "CITY": "City",
+        "POSTAL_CODE": "Postal code",
+        "LINE1": "Address line"
+      },
+      "BUTTON": "Add customer"
+    },
+    "EDIT": {
+      "TITLE": "Edit customer",
+      "SUBTITLE": "Update customer information.",
+      "FORM": {
+        "KYC_STATUS": "KYC Status",
+        "IS_ACTIVE": "Active"
+      }
+    },
+    "DETAIL": {
+      "ERROR_MESSAGE": "Customer detail could not be retrieved. Please try again."
+    }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "SUBTITLE": "Sign in to continue",
+      "EMAIL_LABEL": "Email",
+      "EMAIL_PLACEHOLDER": "Enter your email",
+      "EMAIL_ERROR": "Please enter a valid email address",
+      "PASSWORD_LABEL": "Password",
+      "PASSWORD_PLACEHOLDER": "Enter your password",
+      "PASSWORD_ERROR": "Password is required",
+      "SIGN_IN": "Sign in",
+      "SIGNING_IN": "Signing in...",
+      "INVALID_CREDENTIALS": "Invalid email or password"
+    }
+  },
+  "TRANSACTIONS": {
+    "TITLE": "Transactions",
+    "SUBTITLE": "View and filter transactions for customer",
+    "FILTER": {
+      "TYPE_ALL": "Type: All",
+      "DIRECTION_ALL": "Direction: All",
+      "CURRENCY_ALL": "Currency: All",
+      "FROM": "From",
+      "TO": "To"
+    },
+    "TABLE": {
+      "DATE": "Date",
+      "TYPE": "Type",
+      "DIRECTION": "Direction",
+      "DESCRIPTION": "Description",
+      "AMOUNT": "Amount",
+      "MERCHANT_RECEIVER": "Merchant / Receiver"
+    },
+    "TYPE": {
+      "DEBIT": "DEBIT",
+      "CREDIT": "CREDIT"
+    },
+    "DIRECTION": {
+      "INCOMING": "INCOMING",
+      "OUTGOING": "OUTGOING"
+    },
+    "EMPTY": "No transactions found."
+  },
+  "WALLET": {
+    "TITLE": "Wallet",
+    "CUSTOMER": "Customer",
+    "TABLE": {
+      "CURRENCY": "Currency",
+      "BALANCE": "Balance",
+      "DAILY_LIMIT": "Daily Limit",
+      "MONTHLY_LIMIT": "Monthly Limit"
+    },
+    "UPDATE": "Update wallet",
+    "WALLET_ERROR_MESSAGE": "An error occurred while retrieving wallet information."
+  }
+}

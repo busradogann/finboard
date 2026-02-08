@@ -1,0 +1,198 @@
+<div class="min-h-screen bg-[#F4F6FA] dark:bg-[#0B1220] p-6 text-slate-800 dark:text-slate-100">
+	<div class="mx-auto max-w-6xl" *ngIf="vm$ | async as vm">
+		<div class="flex items-end justify-between gap-4">
+			<div>
+				<a routerLink="/customers"
+					class="text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition">
+					← {{ 'COMMON.BACK' | translate }}
+				</a>
+
+				<h1 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+					{{ 'TRANSACTIONS.TITLE' | translate }}
+				</h1>
+
+				<p class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+					{{ 'TRANSACTIONS.SUBTITLE' | translate }}
+					<span class="font-mono text-slate-600 dark:text-slate-300">({{ vm.customerId }})</span>
+				</p>
+			</div>
+
+			<button type="button" (click)="refresh()" class="inline-flex h-10 w-10 items-center justify-center rounded-xl
+               border border-slate-200 bg-white text-slate-900
+               hover:bg-slate-50 active:scale-95 transition
+               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:bg-slate-800"
+				[attr.aria-label]="'COMMON.REFRESH' | translate" [title]="'COMMON.REFRESH' | translate">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+					stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round"
+						d="M4 4v6h6M20 20v-6h-6M5 13a7 7 0 0112-4M19 11a7 7 0 01-12 4" />
+				</svg>
+			</button>
+		</div>
+
+		<div class="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-6">
+			<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="type"
+				(ngModelChange)="onTypeChange($event)">
+				<option value="">{{ 'TRANSACTIONS.FILTER.TYPE_ALL' | translate }}</option>
+				<option value="DEBIT">{{ 'TRANSACTIONS.TYPE.DEBIT' | translate }}</option>
+				<option value="CREDIT">{{ 'TRANSACTIONS.TYPE.CREDIT' | translate }}</option>
+			</select>
+
+			<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="transferDirection"
+				(ngModelChange)="onDirectionChange($event)">
+				<option value="">{{ 'TRANSACTIONS.FILTER.DIRECTION_ALL' | translate }}</option>
+				<option value="INCOMING">{{ 'TRANSACTIONS.DIRECTION.INCOMING' | translate }}</option>
+				<option value="OUTGOING">{{ 'TRANSACTIONS.DIRECTION.OUTGOING' | translate }}</option>
+			</select>
+
+			<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="currency"
+				(ngModelChange)="onCurrencyChange($event)">
+				<option value="">{{ 'TRANSACTIONS.FILTER.CURRENCY_ALL' | translate }}</option>
+				<option value="TRY">TRY</option>
+				<option value="USD">USD</option>
+				<option value="EUR">EUR</option>
+			</select>
+
+			<input type="datetime-local" class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 placeholder:text-slate-400
+               focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:placeholder:text-slate-500"
+				[placeholder]="'TRANSACTIONS.FILTER.FROM' | translate" [ngModel]="from"
+				(ngModelChange)="onFromChange($event)" />
+
+			<input type="datetime-local" class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 placeholder:text-slate-400
+               focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:placeholder:text-slate-500"
+				[placeholder]="'TRANSACTIONS.FILTER.TO' | translate" [ngModel]="to" (ngModelChange)="onToChange($event)" />
+
+			<select class="w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm
+               text-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-300/40
+               dark:border-white/10 dark:bg-white/5 dark:text-slate-100" [ngModel]="pageSize"
+				(ngModelChange)="onPageSizeChange($event)">
+				<option [ngValue]="10">10 / page</option>
+				<option [ngValue]="20">20 / page</option>
+				<option [ngValue]="50">50 / page</option>
+			</select>
+		</div>
+
+		<div *ngIf="vm.state === 'error'" class="mt-4 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700
+      dark:border-rose-500/30 dark:bg-rose-500/10 dark:text-rose-200">
+			{{ vm.message }}
+		</div>
+
+		<div class="mt-4 rounded-2xl border border-slate-200 bg-white/70 backdrop-blur p-2 shadow-sm
+      dark:border-white/10 dark:bg-white/5">
+
+			<div *ngIf="vm.state === 'loading'" class="p-4 space-y-3">
+				<div class="h-6 w-1/3 rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+				<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+				<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+				<div class="h-10 w-full rounded-lg bg-slate-200 animate-pulse dark:bg-white/10"></div>
+			</div>
+
+			<ng-container *ngIf="vm.state === 'ready'">
+				<div class="overflow-x-auto">
+					<table class="min-w-full text-sm">
+						<thead class="text-slate-500 dark:text-slate-400">
+							<tr>
+								<th class="px-4 py-3 font-medium text-left">{{ 'TRANSACTIONS.TABLE.DATE' | translate }}
+								</th>
+								<th class="px-4 py-3 font-medium text-left">{{ 'TRANSACTIONS.TABLE.TYPE' | translate }}
+								</th>
+								<th class="px-4 py-3 font-medium text-left">{{ 'TRANSACTIONS.TABLE.DIRECTION' |
+									translate }}</th>
+								<th class="px-4 py-3 font-medium text-left">{{ 'TRANSACTIONS.TABLE.DESCRIPTION' |
+									translate }}</th>
+								<th class="px-4 py-3 font-medium text-right">{{ 'TRANSACTIONS.TABLE.AMOUNT' | translate
+									}}</th>
+								<th class="px-4 py-3 font-medium text-left">{{ 'TRANSACTIONS.TABLE.MERCHANT_RECEIVER' |
+									translate }}</th>
+							</tr>
+						</thead>
+
+						<tbody class="divide-y divide-slate-200 dark:divide-white/10">
+							<tr *ngFor="let t of vm.res.data" class="hover:bg-slate-50 dark:hover:bg-white/5">
+								<td class="px-4 py-3 text-slate-600 dark:text-slate-300">
+									{{ formatDate(t.createdAt) }}
+								</td>
+
+								<td class="px-4 py-3">
+									<span class="rounded-full border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700
+                    dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+										{{ ('TRANSACTIONS.TYPE.' + t.type) | translate }}
+									</span>
+								</td>
+
+								<td class="px-4 py-3">
+									<span class="rounded-full border border-slate-200 bg-white px-2 py-1 text-xs text-slate-700
+                    dark:border-white/10 dark:bg-white/5 dark:text-slate-200">
+										{{ ('TRANSACTIONS.DIRECTION.' + t.transferDirection) | translate }}
+									</span>
+								</td>
+
+								<td class="px-4 py-3 text-slate-600 dark:text-slate-300">
+									{{ t.description }}
+								</td>
+
+								<td class="px-4 py-3 text-right font-semibold tabular-nums text-slate-800 dark:text-slate-100">
+									{{ formatMoney(t.amount, t.currency) }}
+								</td>
+
+								<td class="px-4 py-3 text-slate-600 dark:text-slate-300">
+									<div *ngIf="t.merchantName">{{ t.merchantName }}</div>
+									<div *ngIf="t.receiverName" class="text-xs text-slate-500 dark:text-slate-400">
+										{{ t.receiverName }} • {{ t.receiverWalletNumber }}
+									</div>
+								</td>
+							</tr>
+
+							<tr *ngIf="vm.res.data.length === 0">
+								<td colspan="6" class="px-4 py-10 text-center text-slate-500 dark:text-slate-400">
+									{{ 'TRANSACTIONS.EMPTY' | translate }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="flex items-center justify-between px-3 py-3">
+					<div class="text-xs text-slate-500 dark:text-slate-400">
+						{{ 'COMMON.PAGE' | translate }}
+						<span class="font-medium text-slate-700 dark:text-slate-200">{{ vm.res.page }}</span>
+						• {{ 'COMMON.TOTAL' | translate }}
+						<span class="font-medium text-slate-700 dark:text-slate-200">{{ vm.res.total }}</span>
+					</div>
+
+					<div class="flex gap-2">
+						<button class="rounded-xl px-3 py-1.5
+                     border border-slate-200 dark:border-white/10
+                     bg-white/80 dark:bg-white/5
+                     text-slate-700 dark:text-slate-100
+                     hover:bg-white dark:hover:bg-white/10
+                     disabled:opacity-50 disabled:cursor-not-allowed" (click)="prevPage(vm.res)"
+							[disabled]="vm.res.page <= 1">
+							{{ 'COMMON.PREV' | translate }}
+						</button>
+
+						<button class="rounded-xl px-3 py-1.5
+                     border border-slate-200 dark:border-white/10
+                     bg-white/80 dark:bg-white/5
+                     text-slate-700 dark:text-slate-100
+                     hover:bg-white dark:hover:bg-white/10
+                     disabled:opacity-50 disabled:cursor-not-allowed" (click)="nextPage(vm.res)"
+							[disabled]="vm.res.page * vm.res.pageSize >= vm.res.total">
+							{{ 'COMMON.NEXT' | translate }}
+						</button>
+					</div>
+				</div>
+			</ng-container>
+		</div>
+	</div>
+</div>

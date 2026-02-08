@@ -1,0 +1,43 @@
+<div class="rounded-2xl bg-white p-6 shadow-xl dark:bg-slate-900">
+	<div class="mb-4 flex items-start justify-between gap-3">
+		<div>
+			<div class="text-lg font-extrabold text-slate-900 dark:text-slate-100">
+				{{ titleKey | translate }}
+			</div>
+			<div class="mt-1 text-sm text-slate-500 dark:text-slate-400">
+				{{ subtitleKey | translate }}
+			</div>
+		</div>
+
+		<button type="button" (click)="closeDialog()" class="inline-flex h-9 w-9 items-center justify-center rounded-xl
+             border border-slate-200 bg-white hover:bg-slate-50 transition
+             dark:border-slate-700 dark:bg-slate-900 dark:hover:bg-slate-800"
+			[attr.aria-label]="'COMMON.CLOSE' | translate" [title]="'COMMON.CLOSE' | translate">
+			{{ 'COMMON.CLOSE_ICON' | translate }}
+		</button>
+	</div>
+
+	<form [formGroup]="form" (ngSubmit)="submit()">
+		<formly-form [form]="form" [model]="model" [fields]="fields"></formly-form>
+
+		<div *ngIf="errorMsg"
+			class="mt-4 rounded-xl border border-rose-500/20 bg-rose-500/10 px-4 py-2.5 text-sm text-rose-600 dark:text-rose-300">
+			{{ errorMsg }}
+		</div>
+
+		<div class="mt-6 flex items-center justify-between gap-3">
+			<button type="button" (click)="closeDialog()" class="rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-sm font-semibold text-slate-700
+               hover:bg-slate-50 transition
+               dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800">
+				{{ 'COMMON.CANCEL' | translate }}
+			</button>
+
+			<button type="submit" [disabled]="submitting" class="rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-extrabold text-white
+               hover:bg-slate-800 transition disabled:opacity-60 disabled:cursor-not-allowed
+               dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-white">
+				<span *ngIf="!submitting">{{ submitKey | translate }}</span>
+				<span *ngIf="submitting">{{ submittingKey | translate }}</span>
+			</button>
+		</div>
+	</form>
+</div>
