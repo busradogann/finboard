@@ -9,6 +9,7 @@ import { WalletService } from "../services/wallet.service";
 import { TranslateModule, TranslateService } from "@ngx-translate/core";
 import { Dialog } from "@angular/cdk/dialog";
 import { UpdateWalletModalComponent } from "./update-wallet-modal/update-wallet-modal.component";
+import { CurrencySymbolPipe } from "../shared/pipes/currency-symbol.pipe";
 
 type Vm =
   | { state: "loading"; customerId: string }
@@ -18,7 +19,7 @@ type Vm =
 @Component({
   selector: "app-wallets",
   standalone: true,
-  imports: [CommonModule, RouterModule, TranslateModule],
+  imports: [CommonModule, RouterModule, TranslateModule, CurrencySymbolPipe],
   templateUrl: "./wallets.component.html",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
