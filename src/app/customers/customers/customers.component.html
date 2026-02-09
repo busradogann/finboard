@@ -169,7 +169,7 @@
 						<div class="flex items-center justify-between px-3 py-3">
 							<div class="text-xs text-slate-500 dark:text-slate-400">
 								{{ 'COMMON.PAGE' | translate }}
-								<span class="font-medium text-slate-700 dark:text-slate-200">{{ res.page + 1 }}</span>
+								<span class="font-medium text-slate-700 dark:text-slate-200">{{ res.page }}</span>
 								• {{ 'COMMON.TOTAL' | translate }}
 								<span class="font-medium text-slate-700 dark:text-slate-200">{{ res.total }}</span>
 							</div>
@@ -178,14 +178,14 @@
 								<button class="rounded-xl px-3 py-1.5 border border-slate-200 dark:border-white/10
                          bg-white/80 dark:bg-white/5 text-slate-700 dark:text-slate-100
                          hover:bg-white dark:hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-									(click)="prevPage(res)" [disabled]="res.page === 0">
+									(click)="prevPage(res)" [disabled]="res.page === 1">
 									{{ 'COMMON.PREV' | translate }}
 								</button>
 
 								<button class="rounded-xl px-3 py-1.5 border border-slate-200 dark:border-white/10
                          bg-white/80 dark:bg-white/5 text-slate-700 dark:text-slate-100
                          hover:bg-white dark:hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed"
-									(click)="nextPage(res)" [disabled]="(res.page + 1) * res.pageSize >= res.total">
+									(click)="nextPage(res)" [disabled]="res.page * res.pageSize >= res.total">
 									{{ 'COMMON.NEXT' | translate }}
 								</button>
 							</div>

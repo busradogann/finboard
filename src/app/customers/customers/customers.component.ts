@@ -80,13 +80,13 @@ export class CustomersComponent {
 
   nextPage(res: PagedResponse<Customer>) {
     const next = res.page + 1;
-    const maxPage = Math.ceil(res.total / res.pageSize) - 1;
+    const maxPage = Math.ceil(res.total / res.pageSize);
     if (next <= maxPage) this.customerService.setQuery({ page: next });
   }
 
   prevPage(res: PagedResponse<Customer>) {
     const prev = res.page - 1;
-    if (prev >= 0) this.customerService.setQuery({ page: prev });
+    if (prev >= 1) this.customerService.setQuery({ page: prev });
   }
 
   toggleMenu(customerId: string, ev: MouseEvent) {
