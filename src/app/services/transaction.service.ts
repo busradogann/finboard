@@ -12,10 +12,6 @@ export class TransactionsService {
 
 	constructor(private readonly http: HttpClient) { }
 
-	/**
-	 * GET /api/transactions/:customerId
-	 * Query params: page, pageSize, type, transferDirection, currency, from, to
-	 */
 	getByCustomerId(
 		customerId: string,
 		query: TransactionsQuery = {}

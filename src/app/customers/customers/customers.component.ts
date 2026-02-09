@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, DestroyRef, inject } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Dialog } from '@angular/cdk/dialog';
@@ -37,6 +38,8 @@ export class CustomersComponent {
   detailLoading = false;
   detailError: string | null = null;
   selectedCustomer: CustomerDetailResponse | null = null;
+
+  private destroyRef = inject(DestroyRef);
 
   constructor(
     private customerService: CustomerService,
@@ -89,6 +92,10 @@ export class CustomersComponent {
     if (prev >= 1) this.customerService.setQuery({ page: prev });
   }
 
+  trackByCustomerId(_index: number, customer: Customer): string {
+    return customer.id;
+  }
+
   toggleMenu(customerId: string, ev: MouseEvent) {
     ev.stopPropagation();
     this.openMenuFor = this.openMenuFor === customerId ? null : customerId;
@@ -117,7 +124,7 @@ export class CustomersComponent {
       data: { mode: 'create' },
     });
 
-    ref.closed.subscribe((result) => {
+    ref.closed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result) => {
       if (!result) return;
       this.refreshCustomers();
     });
@@ -143,7 +150,7 @@ export class CustomersComponent {
       data: { mode: 'update', customer },
     });
 
-    ref.closed.subscribe((result) => {
+    ref.closed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((result) => {
       if (!result) return;
       this.refreshCustomers();
     });

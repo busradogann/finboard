@@ -1,5 +1,5 @@
 <div class="fixed top-4 right-4 z-[100] space-y-3">
-	<div *ngFor="let alert of alertService.alerts$ | async" class="min-w-[260px] rounded-xl px-4 py-3 shadow-lg border text-sm font-semibold
+	<div *ngFor="let alert of alertService.alerts$ | async; trackBy: trackByAlertId" class="min-w-[260px] rounded-xl px-4 py-3 shadow-lg border text-sm font-semibold
            transition-all animate-fade-in" [ngClass]="{
       'bg-emerald-50 border-emerald-200 text-emerald-700': alert.type === 'success',
       'bg-rose-50 border-rose-200 text-rose-700': alert.type === 'error',

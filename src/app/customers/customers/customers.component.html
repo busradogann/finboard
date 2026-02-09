@@ -90,7 +90,7 @@
 								</thead>
 
 								<tbody class="divide-y divide-slate-200 dark:divide-white/10">
-									<tr *ngFor="let customer of res.data" (click)="openCustomerDetails(customer.id)"
+									<tr *ngFor="let customer of res.data; trackBy: trackByCustomerId" (click)="openCustomerDetails(customer.id)"
 										class="cursor-pointer hover:bg-slate-50 dark:hover:bg-white/5">
 										<td class="px-4 py-3 font-medium text-slate-800 dark:text-slate-100">{{ customer.name }}</td>
 										<td class="px-4 py-3 text-slate-600 dark:text-slate-300">{{ customer.email }}</td>

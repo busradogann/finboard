@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CommonModule } from "@angular/common";
 import { ActivatedRoute, RouterModule } from "@angular/router";
 import { BehaviorSubject, combineLatest, Observable, of } from "rxjs";
@@ -29,6 +30,7 @@ export class WalletsComponent {
   private readonly refresh$ = new BehaviorSubject<void>(undefined);
   private readonly dialog = inject(Dialog);
   private readonly translate = inject(TranslateService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly customerId$ = this.route.paramMap.pipe(
     map((pm) => (pm.get("customerId") ?? "").trim()),
@@ -110,7 +112,7 @@ export class WalletsComponent {
       },
     });
 
-    ref.closed.subscribe((updatedWallet) => {
+    ref.closed.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((updatedWallet) => {
       if (updatedWallet) {
         this.refresh();
       }

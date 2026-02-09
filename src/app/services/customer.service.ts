@@ -32,14 +32,22 @@ export class CustomerService {
 	private readonly loadingSubject = new BehaviorSubject<boolean>(false);
 	private readonly errorSubject = new BehaviorSubject<ApiError | null>(null);
 
-	/** UI binding */
 	loading$ = this.loadingSubject.asObservable();
 	error$ = this.errorSubject.asObservable();
 
-	/** Main stream: query değişince iptal + yenile */
+	private static queryEqual(a: CustomersQueryRequest, b: CustomersQueryRequest): boolean {
+		return (
+			a.page === b.page &&
+			a.pageSize === b.pageSize &&
+			(a.search ?? '') === (b.search ?? '') &&
+			(a.kycStatus ?? '') === (b.kycStatus ?? '') &&
+			(a.isActive === b.isActive)
+		);
+	}
+
 	customers$: Observable<PagedResponse<Customer>> = this.query$.pipe(
 		debounceTime(250),
-		distinctUntilChanged((a, b) => JSON.stringify(a) === JSON.stringify(b)),
+		distinctUntilChanged(CustomerService.queryEqual),
 		tap(() => {
 			this.errorSubject.next(null);
 			this.loadingSubject.next(true);

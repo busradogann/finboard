@@ -149,6 +149,10 @@ export class TransactionsComponent {
     this.query$.next(q);
   }
 
+  trackByTransactionId(_index: number, t: { id: string }): string {
+    return t.id;
+  }
+
   formatMoney(amount: number, currency: string): string {
     try {
       return new Intl.NumberFormat('tr-TR', {

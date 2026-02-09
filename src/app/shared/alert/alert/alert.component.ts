@@ -1,6 +1,6 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AlertService } from '../../../services/alert.service';
+import { AlertService, Alert } from '../../../services/alert.service';
 
 @Component({
   selector: 'app-alerts',
@@ -11,4 +11,8 @@ import { AlertService } from '../../../services/alert.service';
 })
 export class AlertComponent {
   alertService = inject(AlertService);
+
+  trackByAlertId(_index: number, alert: Alert): number {
+    return alert.id;
+  }
 }

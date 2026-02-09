@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ReactiveFormsModule, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -22,6 +23,7 @@ export class LoginComponent implements OnInit {
   private translate = inject(TranslateService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
 
   form = new FormGroup({});
   options: FormlyFormOptions = {};
@@ -39,7 +41,9 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.buildFields();
-    this.translate.onLangChange.subscribe(() => this.buildFields());
+    this.translate.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.buildFields());
   }
 
   private t(key: string) {
