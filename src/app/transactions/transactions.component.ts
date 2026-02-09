@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { BehaviorSubject, combineLatest, Observable, of } from 'rxjs';
-import { catchError, debounceTime, distinctUntilChanged, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
+import { catchError, map, shareReplay, startWith, switchMap } from 'rxjs/operators';
 import { TranslateModule } from '@ngx-translate/core';
 
 import { TransactionsService } from '../services/transaction.service';
@@ -47,11 +47,6 @@ export class TransactionsComponent {
 
   private readonly refresh$ = new BehaviorSubject<void>(undefined);
 
-  private readonly search$ = new BehaviorSubject<string>('');
-  readonly filteredRes$: Observable<TransactionResponse | null> = combineLatest([
-    this.query$.pipe(map(() => null), startWith(null)),
-  ]).pipe(map(() => null));
-
   readonly vm$: Observable<Vm> = combineLatest([
     this.customerId$,
     this.query$,
@@ -79,12 +74,6 @@ export class TransactionsComponent {
       );
     }),
     shareReplay({ bufferSize: 1, refCount: true })
-  );
-
-  readonly loading$ = this.vm$.pipe(map((vm) => vm.state === 'loading'));
-  readonly error$ = this.vm$.pipe(
-    map((vm) => (vm.state === 'error' ? { message: vm.message } : null)),
-    startWith(null)
   );
 
   onTypeChange(v: string) {

@@ -7,7 +7,7 @@ import { Dialog } from '@angular/cdk/dialog';
 
 import { CustomerService } from '../../services/customer.service';
 import { PagedResponse } from '../../models/customers/customers.page.model';
-import { Customer, CustomerDetailResponse } from '../../models/customers/customers.response.model';
+import { Customer } from '../../models/customers/customers.response.model';
 import { KycStatus } from '../../models/customers/customers.request.model';
 import { Router } from '@angular/router';
 import { CdkMenuModule } from '@angular/cdk/menu';
@@ -33,11 +33,6 @@ export class CustomersComponent {
   customers$: Observable<PagedResponse<Customer>>;
   loading$: Observable<boolean>;
   error$: Observable<any>;
-
-  detailOpen = false;
-  detailLoading = false;
-  detailError: string | null = null;
-  selectedCustomer: CustomerDetailResponse | null = null;
 
   private destroyRef = inject(DestroyRef);
 
@@ -115,8 +110,6 @@ export class CustomersComponent {
     this.router.navigateByUrl(`/customer/${customerId}/transactions`);
   }
 
-  showAddCustomerModal = false;
-
   openCreateCustomerDialog(): void {
     const ref = this.dialog.open(CustomerFormDialogComponent, {
       width: '720px',
@@ -132,14 +125,6 @@ export class CustomersComponent {
 
   refreshCustomers(): void {
     this.customerService.setQuery({});
-  }
-
-  closeAddCustomerModal(): void {
-    this.showAddCustomerModal = false;
-  }
-
-  onCustomerCreated(): void {
-    this.showAddCustomerModal = false;
   }
 
   openEditCustomerDialog(customer: Customer): void {
@@ -183,13 +168,6 @@ export class CustomersComponent {
       autoFocus: false,
       data: { id },
     });
-  }
-
-  closeDetailModal() {
-    this.detailOpen = false;
-    this.selectedCustomer = null;
-    this.detailError = null;
-    this.detailLoading = false;
   }
 
   stop(e: MouseEvent) {
